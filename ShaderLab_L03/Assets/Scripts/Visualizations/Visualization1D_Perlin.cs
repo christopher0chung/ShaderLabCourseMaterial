@@ -9,6 +9,20 @@ public class Visualization1D_Perlin : MonoBehaviour {
     public uint distanceInUnits;
     public uint intervalsPerUnit;
 
+    [Range(0, 10)]
+    public float numberLinePoint;
+
+    public float slope; 
+
+    private Vector3 originLineIntersect;
+    private Vector3 intersect;
+
+    private Vector3 magnitude;
+    private Vector3 tangent;
+    private Vector3 backTangent;
+
+    private Vector3 smallStepBack;
+
 	void Start () {
 		for (int i = 0; i < (distanceInUnits * intervalsPerUnit); i++)
         {
@@ -30,4 +44,26 @@ public class Visualization1D_Perlin : MonoBehaviour {
         }
 
 	}
+
+    private void Update()
+    {
+        originLineIntersect.x = numberLinePoint;
+
+        intersect.x = numberLinePoint;
+        intersect.y = Perlin.Noise(intersect.x);
+
+        magnitude.x = numberLinePoint;
+        magnitude.y = intersect.y;
+
+        smallStepBack.x = numberLinePoint - .01f;
+        smallStepBack.y = Perlin.Noise(smallStepBack.x);
+
+        tangent = Vector3.Normalize(intersect -  smallStepBack)  + intersect;
+        backTangent = Vector3.Normalize(smallStepBack - intersect) + intersect;
+
+        Debug.DrawLine(originLineIntersect, magnitude);
+        Debug.DrawLine(backTangent, tangent);
+
+        slope = tangent.y / tangent.x;
+    }
 }

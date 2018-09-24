@@ -53,7 +53,9 @@ public class Chunk {
                 float X = (float)(originPoint.x + j);
                 float Z = (float)(originPoint.z + i);
 
-                Vector3 pos = new Vector3(X, Mathf.Abs(Perlin.Noise(X/64, Z/64) * 30 * Perlin.Noise(X/8, Z/8)) + Perlin.Noise(X / 16, Z / 16), Z);
+                Vector3 pos = new Vector3(X, 30 * Perlin.Noise(X / 4, Z / 4) * Perlin.Noise(X/16.23f, Z/50.23f), Z);
+
+                //Vector3 pos = new Vector3(X, Mathf.Abs(Perlin.Noise(X/64, Z/64) * 30 * Perlin.Noise(X/8, Z/8)) + Perlin.Noise(X / 16, Z / 16), Z);
                 //Debug.Log(pos);
                 _tempVerts.Add(pos);
                 _tempUVs.Add(new Vector2((float)i / 8, (float)j / 8));
